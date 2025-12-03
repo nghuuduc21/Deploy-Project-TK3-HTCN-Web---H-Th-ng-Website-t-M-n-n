@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - MTP Food</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/admin_styles.css">
+</head>
+<body>
+
+<!-- Auth Wrapper -->
+<div id="authWrapper" class="auth-wrapper">
+    <div class="auth-card">
+        <h3 class="mb-3">Đăng nhập Quản trị</h3>
+        <p class="text-muted small mb-4">Truy cập dashboard để quản lý món ăn, đặt bàn và thống kê.</p>
+        <form id="loginForm" onsubmit="handleLogin(event)">
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input type="email" id="loginEmail" class="form-control" placeholder="admin@mtpfood.vn" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Mật khẩu</label>
+                <input type="password" id="loginPassword" class="form-control" placeholder="********" required>
+            </div>
+            <button class="btn btn-primary-admin w-100" type="submit">Đăng nhập</button>
+        </form>
+        <div class="register-panel mt-4">
+            <button class="link-btn" type="button" onclick="toggleRegisterPanel()">Tạo admin đầu tiên</button>
+            <form id="registerForm" class="d-none mt-3" onsubmit="handleRegister(event)">
+                <div class="mb-2">
+                    <input type="text" id="registerName" class="form-control" placeholder="Họ tên">
+                </div>
+                <div class="mb-2">
+                    <input type="email" id="registerEmail" class="form-control" placeholder="Email quản trị">
+                </div>
+                <div class="mb-2">
+                    <input type="password" id="registerPassword" class="form-control" placeholder="Mật khẩu">
+                </div>
+                <button class="btn btn-outline-light w-100" type="submit">Đăng ký</button>
+                <small class="text-muted d-block mt-2">Hệ thống chỉ cho phép đăng ký tự do khi chưa có admin.</small>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- App Layout -->
+<div id="appLayout" style="display: none;">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-2 sidebar">
+                <div class="p-4 d-flex flex-column h-100">
+                    <h4 class="sidebar-title">MTP ADMIN</h4>
+                    
+                    <nav class="nav flex-column mt-4">
+                        <a class="nav-link active" href="#" onclick="showSection('dashboard', event)">
+                            Dashboard
+                        </a>
+                        <a class="nav-link" href="#" onclick="showSection('foods', event)">
+                            Quản lý món ăn
+                        </a>
+                        <a class="nav-link" href="#" onclick="showSection('bookings', event)">
+                            Đơn đặt bàn
+                        </a>
+                        <hr class="divider">
+                        <a class="nav-link" href="index.html">
+                            Về trang chủ
+                        </a>
+                    </nav>
+                    
+                    <div class="sidebar-foot mt-auto">
+                        <small class="text-muted d-block">Phiên đăng nhập:</small>
+                        <span id="sidebarStatus" class="text-cyan">--</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Main Content -->
+            <div class="col-md-10 main-content">
+                <div class="top-bar d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h2 class="page-title mb-1">BẢNG ĐIỀU KHIỂN</h2>
+                        <p id="adminGreeting" class="text-muted small mb-0"></p>
+                    </div>
+                    <div class="header-actions">
+                        <button class="btn btn-primary-admin me-2" data-bs-toggle="modal" data-bs-target="#adminModal">
+                            Tạo admin mới
+                        </button>
+                        <!-- <button class="btn btn-outline-light me-2" onclick="refreshData()">Làm mới</button> -->
+                        <button class="btn btn-danger-admin" onclick="logoutAdmin()">Đăng xuất</button>
+                    </div>
+                </div>
+                
+                <div id="dashboardSection">
+                    <div class="row g-4">
+                        <div class="col-md-3">
+                            <div class="stat-card stat-primary">
+                                <div class="stat-value" id="totalFoods">0</div>
+                                <div class="stat-label">Tổng món ăn</div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-3">
+                            <div class="stat-card stat-success">
+                                <div class="stat-value" id="totalBookings">0</div>
+                                <div class="stat-label">Đơn đặt bàn</div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-3">
+                            <div class="stat-card stat-warning">
+                                <div class="stat-value" id="pendingBookings">0</div>
+                                <div class="stat-label">Chờ xác nhận</div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-3">
+                            <div class="stat-card stat-info">
+                                <div class="stat-value" id="totalRevenue">0đ</div>
+                                <div class="stat-label">Doanh thu</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="upcoming-admin mt-5">
+                        <h5 class="text-cyan mb-3">Lịch sắp tới</h5>
+                        <div id="adminUpcoming" class="upcoming-list"></div>
+                    </div>
+                </div>
+                
+                <!-- Foods Section -->
+                <div id="foodsSection" style="display: none;">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2 class="page-title">QUẢN LÝ MÓN ĂN</h2>
+                        <div>
+                            <button class="btn btn-outline-light me-2" onclick="seedFoods()">Seed mẫu</button>
+                            <button class="btn btn-primary-admin" data-bs-toggle="modal" data-bs-target="#foodModal" onclick="resetFoodForm()">
+                                Thêm món mới
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="data-table">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Hình ảnh</th>
+                                    <th>Tên món</th>
+                                    <th>Giá</th>
+                                    <th>Mô tả</th>
+                                    <th>Hành động</th>
+                                </tr>
+                            </thead>
+                            <tbody id="foodsTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Bookings Section -->
+                <div id="bookingsSection" style="display: none;">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2 class="page-title mb-0">ĐƠN ĐẶT BÀN</h2>
+                        <div class="filter-tabs">
+                            <button class="filter-chip active" data-status="all" onclick="filterBookings('all')">Tất cả</button>
+                            <button class="filter-chip" data-status="pending" onclick="filterBookings('pending')">Chờ</button>
+                            <button class="filter-chip" data-status="confirmed" onclick="filterBookings('confirmed')">Đã xác nhận</button>
+                        </div>
+                    </div>
+                    <div id="bookingsList"></div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Food Modal -->
+<div class="modal fade" id="foodModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="foodModalTitle">Thêm món mới</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="foodForm" onsubmit="saveFoodForm(event)" enctype="multipart/form-data">
+                    <input type="hidden" id="foodId">
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Tên món *</label>
+                        <input type="text" class="form-control" id="foodName" required
+                               placeholder="Ví dụ: Bò bít tết">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Giá *</label>
+                        <input type="number" class="form-control" id="foodPrice" min="0" required
+                               placeholder="Ví dụ: 150000">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Hình ảnh *</label>
+                        <input type="file" class="form-control" id="foodImage" accept="image/*" 
+                               onchange="previewImage(event)">
+                        <small class="text-muted">Chọn file ảnh từ máy tính (PNG, JPG, JPEG, GIF, WEBP)</small>
+                        <div id="imagePreview" class="mt-2" style="display: none;">
+                            <img id="previewImg" src="" alt="Preview" style="max-width: 200px; max-height: 200px; border-radius: 8px;">
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Mô tả</label>
+                        <textarea class="form-control" id="foodDescription" rows="3"
+                                  placeholder="Mô tả về món ăn..."></textarea>
+                    </div>
+                    
+                    <div class="text-end">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                        <button type="submit" class="btn btn-primary-admin">Lưu</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Admin Modal -->
+<div class="modal fade" id="adminModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Tạo admin mới</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="adminForm" onsubmit="createAdminFromModal(event)">
+                    <div class="mb-3">
+                        <label class="form-label">Họ tên</label>
+                        <input type="text" id="adminFullName" class="form-control" placeholder="Họ tên admin mới" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" id="adminEmail" class="form-control" placeholder="email@mtpfood.vn" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Mật khẩu</label>
+                        <input type="password" id="adminPassword" class="form-control" placeholder="********" required>
+                    </div>
+                    <div class="text-end">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                        <button type="submit" class="btn btn-primary-admin">Tạo admin</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../js/config.js"></script>
+<script src="../js/admin_script.js"></script>
+
+</body>
+</html>
+

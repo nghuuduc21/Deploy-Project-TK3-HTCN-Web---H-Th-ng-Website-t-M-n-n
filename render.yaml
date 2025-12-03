@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: mtp-food-backend
+    env: python
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: cd backend && gunicorn -b 0.0.0.0:$PORT app:app
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.7
+      - key: DATABASE_URL
+        fromDatabase:
+          name: mtp-food-db
+          property: connectionString
+      - key: JWT_SECRET_KEY
+        generateValue: true
+      - key: GROQ_API_KEY
+        sync: false
+      - key: GROQ_MODEL
+        value: llama-3.1-8b-instant
+
+databases:
+  - name: mtp-food-db
+    plan: free
+    databaseName: mtp_food
+    user: mtp_user
+
