@@ -1,6 +1,9 @@
 [build]
-  base = "frontend"
+  base = "."
   publish = "frontend/html"
+
+[build.environment]
+  NODE_VERSION = "22"
 
 [[redirects]]
   from = "/*"
