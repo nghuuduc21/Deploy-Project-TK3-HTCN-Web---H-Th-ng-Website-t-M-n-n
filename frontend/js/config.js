@@ -7,11 +7,11 @@
     // Nếu đang chạy trên production (Netlify/Render), dùng API URL từ env hoặc hardcode
     // Nếu local, dùng localhost
     window.API_URL = isProduction 
-        ? (window.API_URL || 'https://mtp-food-backend.onrender.com/api')
+        ? (window.API_URL || 'https://mtp-food-backend-2.onrender.com/api')
         : 'http://localhost:5000/api';
 
     window.BASE_URL = isProduction
-        ? (window.BASE_URL || 'https://mtp-food-backend.onrender.com')
+        ? (window.BASE_URL || 'https://mtp-food-backend-2.onrender.com')
         : 'http://localhost:5000';
 })();
 
