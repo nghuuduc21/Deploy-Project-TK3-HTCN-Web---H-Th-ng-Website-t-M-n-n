@@ -55,10 +55,14 @@ CORS(app,
      methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
      supports_credentials=True)
 
+# Fix DATABASE_URL: Render trả về postgres:// nhưng SQLAlchemy 2.0+ cần postgresql://
+database_url = os.getenv("DATABASE_URL", f"sqlite:///{DEFAULT_DB_PATH.as_posix()}")
+if database_url.startswith("postgres://"):
+    database_url = database_url.replace("postgres://", "postgresql://", 1)
+    print(f"[DB] Đã convert DATABASE_URL từ postgres:// sang postgresql://")
+
 app.config.update(
-    SQLALCHEMY_DATABASE_URI=os.getenv(
-        "DATABASE_URL", f"sqlite:///{DEFAULT_DB_PATH.as_posix()}"
-    ),
+    SQLALCHEMY_DATABASE_URI=database_url,
     SQLALCHEMY_TRACK_MODIFICATIONS=False,
     JWT_SECRET_KEY=os.getenv("JWT_SECRET_KEY", "mtp-dev-secret"),
     JSON_SORT_KEYS=False,
@@ -1029,13 +1033,28 @@ def init_db():
     """Khởi tạo database tables (chạy khi app start, kể cả trên Render)"""
     with app.app_context():
         try:
+            print(f"[DB] Đang khởi tạo database...")
+            print(f"[DB] DATABASE_URL: {database_url[:50]}..." if len(database_url) > 50 else f"[DB] DATABASE_URL: {database_url}")
             db.create_all()
-            print("[DB] Database tables đã được khởi tạo")
+            print("[DB] ✅ Database tables đã được khởi tạo thành công")
         except Exception as e:
-            print(f"[DB] Lỗi khởi tạo database: {e}")
+            print(f"[DB] ❌ Lỗi khởi tạo database: {e}")
+            import traceback
+            traceback.print_exc()
 
 # Gọi init_db() khi module được import (chạy trên cả local và Render)
 init_db()
+
+# Thêm route để trigger init_db() nếu cần (cho admin)
+@app.post("/api/init-db")
+def trigger_init_db():
+    """Route để trigger khởi tạo database (dùng khi cần)"""
+    try:
+        with app.app_context():
+            db.create_all()
+        return jsonify({"message": "Database tables đã được khởi tạo"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
     print("=" * 60)
