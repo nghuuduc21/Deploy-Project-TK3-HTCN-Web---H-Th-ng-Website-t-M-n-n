@@ -1,0 +1,1020 @@
+/* ============================================
+   VARIABLES & RESET
+============================================ */
+
+:root {
+    --primary-dark: #0a192f;
+    --secondary-dark: #112240;
+    --accent-cyan: #9ddee7;
+    --accent-blue: #9595ea;
+    --text-light: #cbd6fc;
+    --text-gray: #a6b1ee;
+    --success: #10b981;
+    --danger: #ef4444;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--primary-dark);
+    color: var(--text-light);
+    overflow-x: hidden;
+}
+
+section {
+    position: relative;
+    overflow: hidden;
+}
+
+/* ============================================
+   NAVBAR
+============================================ */
+.navbar {
+    background: rgba(17, 34, 64, 0.95) !important;
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0, 217, 255, 0.1);
+    padding: 15px 0;
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 2px;
+}
+
+.nav-link {
+    color: var(--text-light) !important;
+    margin: 0 10px;
+    transition: color 0.3s;
+    font-weight: 500;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: var(--accent-cyan) !important;
+}
+
+/* ============================================
+   HERO SECTION
+============================================ */
+.hero {
+    background: 
+        /* linear-gradient(135deg, rgba(10, 25, 47, 0.95), rgba(17, 34, 64, 0.85)), */
+        url('https://wallpapercave.com/wp/wp1874165.jpg') center/cover fixed;
+    padding: 250px 0;
+    text-align: center;
+    border-bottom: 2px solid var(--accent-cyan);
+    position: relative;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(0, 217, 255, 0.1), transparent);
+}
+
+.hero-title {
+    font-size: 4rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 3px;
+    position: relative;
+    z-index: 1;
+}
+
+.hero-subtitle {
+    font-size: 1.4rem;
+    color: var(--text-gray);
+    margin-bottom: 40px;
+    position: relative;
+    z-index: 1;
+}
+
+.hero::after {
+    content: '';
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    border: 1px solid rgba(157, 222, 231, 0.3);
+    bottom: 30px;
+    right: 15%;
+    z-index: 0;
+}
+
+.btn-primary-custom {
+    background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+    border: none;
+    padding: 15px 50px;
+    font-size: 1.1rem;
+    border-radius: 50px;
+    color: white;
+    font-weight: 600;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: inline-block;
+    position: relative;
+    z-index: 1;
+}
+
+.btn-primary-custom:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 217, 255, 0.4);
+    color: white;
+}
+
+/* ============================================
+   MENU SECTION
+============================================ */
+.menu-section {
+    background: var(--primary-dark);
+    padding: 100px 0;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.section-title h2 {
+    font-size: 3rem;
+    font-weight: bold;
+    background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+}
+
+.section-title p {
+    color: var(--text-gray);
+    font-size: 1.2rem;
+}
+
+/* Menu Card */
+.menu-card {
+    background: var(--secondary-dark);
+    border: 1px solid rgba(0, 217, 255, 0.15);
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.4s;
+    height: 100%;
+    cursor: pointer;
+}
+
+.menu-card:hover {
+    transform: translateY(-15px);
+    border-color: var(--accent-cyan);
+    box-shadow: 0 15px 50px rgba(0, 217, 255, 0.3);
+}
+
+.menu-card img {
+    height: 280px;
+    object-fit: cover;
+    width: 100%;
+    transition: transform 0.4s;
+}
+
+.menu-card:hover img {
+    transform: scale(1.1);
+}
+
+.menu-card .card-body {
+    padding: 25px;
+}
+
+.menu-card .card-title {
+    color: var(--text-light);
+    font-weight: bold;
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+}
+
+.menu-card .card-text {
+    color: var(--text-gray);
+    margin-bottom: 20px;
+    min-height: 50px;
+}
+
+.menu-card .price {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--accent-cyan);
+}
+
+.btn-add-cart {
+    background: var(--accent-blue);
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 25px;
+    transition: all 0.3s;
+    font-weight: 600;
+}
+
+.btn-add-cart:hover {
+    background: var(--accent-cyan);
+    transform: scale(1.05);
+    box-shadow: 0 5px 20px rgba(0, 217, 255, 0.4);
+}
+
+/* ============================================
+   BOOKING SECTION
+============================================ */
+.booking-section {
+    background: var(--secondary-dark);
+    padding: 100px 0;
+    border-top: 1px solid rgba(0, 217, 255, 0.1);
+}
+
+.booking-card {
+    background: var(--primary-dark);
+    border: 1px solid rgba(0, 217, 255, 0.2);
+    border-radius: 20px;
+    padding: 50px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.form-label {
+    color: var(--text-light);
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.form-control,
+.form-select {
+    background: var(--secondary-dark);
+    border: 1px solid rgba(0, 217, 255, 0.3);
+    color: var(--text-light);
+    padding: 12px 15px;
+    border-radius: 10px;
+    transition: all 0.3s;
+}
+
+.form-control:focus,
+.form-select:focus {
+    background: var(--secondary-dark);
+    border-color: var(--accent-cyan);
+    color: var(--text-light);
+    box-shadow: 0 0 0 0.2rem rgba(0, 217, 255, 0.25);
+}
+
+.form-control::placeholder {
+    color: var(--text-gray);
+}
+
+.error-message {
+    color: var(--danger);
+    font-size: 0.85rem;
+    margin-top: 5px;
+    display: none;
+}
+
+.error-message.show {
+    display: block;
+}
+
+/* Cart Summary in Booking */
+.cart-summary {
+    background: var(--secondary-dark);
+    border: 1px solid rgba(0, 217, 255, 0.2);
+    border-radius: 15px;
+    padding: 25px;
+    margin: 30px 0;
+}
+
+.cart-summary-preview {
+    background: var(--secondary-dark);
+    border: 1px solid rgba(0, 217, 255, 0.2);
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.cart-summary h5 {
+    color: var(--accent-cyan);
+    margin-bottom: 20px;
+}
+
+.cart-summary-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(0, 217, 255, 0.1);
+}
+
+.cart-summary-item:last-child {
+    border-bottom: none;
+}
+
+.total-section {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 2px solid var(--accent-cyan);
+}
+
+.total-section h4 {
+    color: var(--text-light);
+    display: flex;
+    justify-content: space-between;
+}
+
+.total-section span {
+    color: var(--accent-cyan);
+}
+
+/* ============================================
+   CART FLOATING BUTTON
+============================================ */
+.cart-floating-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    box-shadow: 0 10px 30px rgba(0, 217, 255, 0.4);
+    cursor: pointer;
+    transition: all 0.3s;
+    z-index: 1000;
+}
+
+.cart-floating-btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 217, 255, 0.6);
+}
+
+.cart-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: var(--danger);
+    color: white;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+/* ============================================
+   CART MODAL
+============================================ */
+.modal-content {
+    background: var(--secondary-dark);
+    border: 1px solid rgba(0, 217, 255, 0.3);
+    border-radius: 20px;
+}
+
+.modal-header {
+    border-bottom: 1px solid rgba(0, 217, 255, 0.2);
+    padding: 20px 30px;
+}
+
+.modal-title {
+    color: var(--accent-cyan);
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.modal-body {
+    padding: 30px;
+}
+
+.modal-footer {
+    border-top: 1px solid rgba(0, 217, 255, 0.2);
+    padding: 20px 30px;
+}
+
+.btn-close {
+    filter: invert(1);
+    opacity: 0.8;
+}
+
+.btn-close:hover {
+    opacity: 1;
+}
+
+/* Cart Item */
+.cart-item {
+    background: var(--primary-dark);
+    border: 1px solid rgba(0, 217, 255, 0.15);
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.cart-item img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.cart-item-info {
+    flex: 1;
+}
+
+.cart-item-info h5 {
+    color: var(--text-light);
+    margin-bottom: 5px;
+}
+
+.cart-item-price {
+    color: var(--accent-cyan);
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.quantity-control {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.quantity-btn {
+    width: 35px;
+    height: 35px;
+    border: 2px solid var(--accent-cyan);
+    background: transparent;
+    color: var(--accent-cyan);
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.quantity-btn:hover {
+    background: var(--accent-cyan);
+    color: var(--primary-dark);
+}
+
+.quantity-display {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: var(--text-light);
+    min-width: 40px;
+    text-align: center;
+}
+
+.btn-remove {
+    background: var(--danger);
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-remove:hover {
+    background: #dc2626;
+    transform: scale(1.05);
+}
+
+.cart-total {
+    background: var(--primary-dark);
+    border: 2px solid var(--accent-cyan);
+    border-radius: 15px;
+    padding: 25px;
+    margin-top: 20px;
+}
+
+.cart-total h4 {
+    color: var(--text-light);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;
+}
+
+.cart-total span {
+    color: var(--accent-cyan);
+    font-size: 2rem;
+}
+
+/* ============================================
+   CHATBOT
+============================================ */
+.chatbot-widget {
+    position: fixed;
+    bottom: 100px;
+    right: 30px;
+    width: 350px;
+    height: 500px;
+    background: var(--secondary-dark);
+    border: 1px solid rgba(0, 217, 255, 0.3);
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    display: none;
+    flex-direction: column;
+    z-index: 999;
+}
+
+.chatbot-header {
+    background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+    color: white;
+    padding: 15px 20px;
+    border-radius: 20px 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chatbot-header h6 {
+    margin: 0;
+    font-weight: bold;
+}
+
+.btn-close-chat {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    /* cursor: pointer; */
+    line-height: 1;
+}
+
+.chatbot-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    background: var(--primary-dark);
+}
+
+.chat-message {
+    margin-bottom: 15px;
+    padding: 12px 18px;
+    border-radius: 15px;
+    max-width: 80%;
+    word-wrap: break-word;
+}
+
+.chat-message.user {
+    background: var(--accent-blue);
+    color: white;
+    margin-left: auto;
+}
+
+.chat-message.bot {
+    background: var(--secondary-dark);
+    color: var(--text-light);
+    border: 1px solid rgba(0, 217, 255, 0.2);
+}
+
+.chatbot-input {
+    padding: 15px;
+    border-top: 1px solid rgba(0, 217, 255, 0.2);
+    display: flex;
+    gap: 10px;
+}
+
+.chatbot-input input {
+    flex: 1;
+    background: var(--primary-dark);
+    border: 1px solid rgba(0, 217, 255, 0.3);
+    color: var(--text-light);
+    padding: 10px 15px;
+    border-radius: 20px;
+}
+
+.chatbot-input button {
+    background: var(--accent-cyan);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    /* cursor: pointer; */
+    font-weight: 600;
+}
+
+/* #chatbotContainer {
+    position: relative;
+    z-index: 10000;
+} */
+
+.chatbot-toggle {
+    position: fixed;
+    bottom: 30px;
+    right: 180px;
+    background: linear-gradient(135deg, var(--accent-blue), #764ba2);
+    color: white;
+    border: none;
+    padding: 15px 25px;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+    transition: all 0.3s;
+    z-index: 1000;
+
+}
+
+.chatbot-toggle:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.6);
+}
+
+/* ============================================
+   UTILITIES
+============================================ */
+.spinner-border.text-cyan {
+    border-color: var(--accent-cyan);
+    border-right-color: transparent;
+}
+
+.alert-success {
+    background: rgba(16, 185, 129, 0.2);
+    border: 1px solid var(--success);
+    color: var(--success);
+    border-radius: 10px;
+}
+
+#bookingCodeDisplay {
+    color: var(--accent-cyan);
+    font-size: 1.1rem;
+}
+
+.btn-secondary {
+    background: var(--text-gray);
+    border: none;
+}
+
+.btn-secondary:hover {
+    background: #6b7280;
+}
+
+/* ============================================
+   NEW SECTIONS
+============================================ */
+.insights-section {
+    background: var(--secondary-dark);
+    padding: 60px 0;
+    border-bottom: 1px solid rgba(0, 217, 255, 0.1);
+}
+
+.insight-card {
+    background: rgba(10, 25, 47, 0.8);
+    border: 1px solid rgba(0, 217, 255, 0.2);
+    border-radius: 20px;
+    padding: 25px;
+    transition: all 0.3s;
+    height: 100%;
+}
+
+.insight-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--accent-cyan);
+    box-shadow: 0 20px 60px rgba(0, 217, 255, 0.2);
+}
+
+.insight-card p {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.8rem;
+    color: var(--text-gray);
+}
+
+.insight-card h3 {
+    font-size: 2.5rem;
+    margin: 10px 0;
+    color: var(--accent-cyan);
+}
+
+.insight-card span {
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
+.upcoming-wrapper {
+    background: rgba(10, 25, 47, 0.6);
+    border: 1px dashed rgba(0, 217, 255, 0.3);
+    border-radius: 20px;
+    padding: 20px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.upcoming-list {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.upcoming-card {
+    background: rgba(17, 34, 64, 0.8);
+    border-radius: 16px;
+    padding: 15px 20px;
+    min-width: 220px;
+    border: 1px solid rgba(0, 217, 255, 0.2);
+}
+
+.upcoming-card strong {
+    color: var(--accent-cyan);
+    display: block;
+}
+
+.upcoming-card span {
+    font-size: 0.85rem;
+    color: var(--text-gray);
+}
+
+.experience-section {
+    background: var(--primary-dark);
+    padding: 80px 0;
+}
+
+.experience-card {
+    background: var(--secondary-dark);
+    border: 1px solid rgba(0, 217, 255, 0.15);
+    border-radius: 20px;
+    padding: 30px;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.experience-card::after {
+    content: '';
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: rgba(149, 149, 234, 0.15);
+    bottom: -40px;
+    right: -30px;
+}
+
+.icon-badge {
+    width: 45px;
+    height: 45px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: var(--primary-dark);
+    margin-bottom: 20px;
+}
+
+.experience-card h5 {
+    color: var(--text-light);
+    margin-bottom: 10px;
+}
+
+.experience-card p {
+    color: var(--text-gray);
+}
+
+.menu-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: space-between;
+    margin-bottom: 40px;
+    align-items: center;
+}
+
+.search-box {
+    flex: 1;
+    min-width: 220px;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 12px 20px;
+    border-radius: 30px;
+    border: 1px solid rgba(0, 217, 255, 0.3);
+    background: var(--secondary-dark);
+    color: var(--text-light);
+}
+
+.filter-group {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.filter-chip {
+    background: transparent;
+    border: 1px solid rgba(0, 217, 255, 0.4);
+    color: var(--text-light);
+    padding: 8px 18px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.filter-chip.active,
+.filter-chip:hover {
+    background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+    color: #0a192f;
+    border-color: transparent;
+}
+
+.process-preview {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 40px;
+}
+
+.process-step {
+    background: var(--primary-dark);
+    border: 1px solid rgba(0, 217, 255, 0.2);
+    border-radius: 16px;
+    padding: 20px;
+    transition: all 0.3s;
+}
+
+.process-step span {
+    font-weight: bold;
+    color: var(--accent-cyan);
+    font-size: 1.3rem;
+}
+
+.process-step.active {
+    border-color: var(--accent-cyan);
+    box-shadow: 0 10px 30px rgba(0, 217, 255, 0.2);
+}
+
+.process-step.completed {
+    border-color: var(--accent-blue);
+    opacity: 0.8;
+}
+
+.process-step h6 {
+    margin-top: 10px;
+    color: var(--text-light);
+}
+
+.booking-meta {
+    background: rgba(0, 217, 255, 0.08);
+    padding: 12px 18px;
+    border-radius: 12px;
+    border: 1px dashed rgba(0, 217, 255, 0.3);
+}
+
+.testimonials-section {
+    background: var(--primary-dark);
+    padding: 90px 0;
+}
+
+.testimonial-card {
+    background: var(--secondary-dark);
+    border: 1px solid rgba(0, 217, 255, 0.2);
+    border-radius: 20px;
+    padding: 30px;
+    height: 100%;
+}
+
+.testimonial-card p {
+    font-style: italic;
+    color: var(--text-gray);
+    margin-bottom: 20px;
+}
+
+.testimonial-card h6 {
+    color: var(--accent-cyan);
+    margin-bottom: 5px;
+}
+
+.testimonial-card span {
+    color: var(--text-gray);
+    font-size: 0.9rem;
+}
+
+.contact-section {
+    background: var(--secondary-dark);
+    padding: 90px 0;
+}
+
+.contact-card,
+.map-card {
+    background: var(--primary-dark);
+    border: 1px solid rgba(0, 217, 255, 0.2);
+    border-radius: 20px;
+    padding: 35px;
+    height: 100%;
+}
+
+.contact-list {
+    list-style: none;
+    padding: 0;
+    margin: 25px 0;
+}
+
+.contact-list li {
+    margin-bottom: 10px;
+}
+
+.social-links a {
+    color: var(--accent-cyan);
+    margin-right: 15px;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.social-links a:hover {
+    text-decoration: underline;
+}
+
+.map-card iframe {
+    border-radius: 12px;
+}
+
+.site-footer {
+    background: #050c1a;
+    padding: 30px 0;
+    border-top: 1px solid rgba(0, 217, 255, 0.15);
+}
+
+/* ============================================
+   RESPONSIVE
+============================================ */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.1rem;
+    }
+    
+    .section-title h2 {
+        font-size: 2rem;
+    }
+    
+    .booking-card {
+        padding: 30px 20px;
+    }
+    
+    .cart-floating-btn,
+    .chatbot-toggle {
+        bottom: 20px;
+        right: 20px;
+        padding: 12px 20px;
+        font-size: 0.9rem;
+    }
+    
+    .chatbot-toggle {
+        right: 120px;
+    }
+    
+    .chatbot-widget {
+        width: 90%;
+        right: 5%;
+    }
+    
+    .menu-toolbar {
+        flex-direction: column;
+    }
+    
+    .upcoming-wrapper {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+
+.text-muted {
+    --bs-text-opacity: 1;
+    color: white var(--bs-secondary-color) !important;
+}
