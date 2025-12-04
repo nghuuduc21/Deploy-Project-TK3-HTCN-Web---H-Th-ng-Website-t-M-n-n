@@ -1,0 +1,12 @@
+{
+  "name": "mtp-food-frontend",
+  "version": "1.0.0",
+  "description": "MTP Food Frontend - Static Site",
+  "scripts": {
+    "build": "echo 'No build needed - static site'"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
+

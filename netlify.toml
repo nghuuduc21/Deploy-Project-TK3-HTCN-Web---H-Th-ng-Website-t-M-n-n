@@ -6,6 +6,8 @@
 [build.environment]
   NODE_VERSION = "22"
   PYTHON_VERSION = ""
+  NIXPACKS_NO_PYTHON = "1"
+  SKIP_PYTHON_INSTALL = "1"
 
 [[redirects]]
   from = "/*"
