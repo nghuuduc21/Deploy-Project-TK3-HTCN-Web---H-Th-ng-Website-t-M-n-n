@@ -1046,14 +1046,16 @@ def init_db():
 init_db()
 
 # Thêm route để trigger init_db() nếu cần (cho admin)
-@app.post("/api/init-db")
+@app.route("/api/init-db", methods=["GET", "POST"])
 def trigger_init_db():
     """Route để trigger khởi tạo database (dùng khi cần)"""
     try:
         with app.app_context():
             db.create_all()
-        return jsonify({"message": "Database tables đã được khởi tạo"}), 200
+        return jsonify({"message": "Database tables đã được khởi tạo thành công"}), 200
     except Exception as e:
+        import traceback
+        traceback.print_exc()
         return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
