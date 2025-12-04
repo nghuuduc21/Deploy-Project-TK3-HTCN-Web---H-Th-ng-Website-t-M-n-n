@@ -1,7 +1,6 @@
 [build]
   base = "."
   publish = "frontend/html"
-  ignore = "runtime.txt"
 
 [build.environment]
   NODE_VERSION = "22"
