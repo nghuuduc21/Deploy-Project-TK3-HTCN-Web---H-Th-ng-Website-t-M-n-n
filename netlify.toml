@@ -1,9 +1,11 @@
 [build]
   base = "."
   publish = "frontend/html"
+  ignore = "runtime.txt"
 
 [build.environment]
   NODE_VERSION = "22"
+  PYTHON_VERSION = ""
 
 [[redirects]]
   from = "/*"

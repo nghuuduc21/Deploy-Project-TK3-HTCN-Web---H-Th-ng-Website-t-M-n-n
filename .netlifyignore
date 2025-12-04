@@ -1,0 +1,12 @@
+backend/
+runtime.txt
+requirements.txt
+Procfile
+render.yaml
+docker-compose.yml
+Dockerfile
+*.db
+*.py
+__pycache__/
+.python-version
+
