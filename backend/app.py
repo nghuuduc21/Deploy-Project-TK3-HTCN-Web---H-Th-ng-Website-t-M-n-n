@@ -274,10 +274,11 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 def serialize_food(food: Food) -> Dict:
-    # Nếu image là path local, convert thành URL
+    # Nếu image là URL (external), dùng trực tiếp
+    # Nếu là path local, convert thành URL
     image_url = food.image
     if food.image and not food.image.startswith('http'):
-        # Dùng relative path, frontend sẽ tự resolve với API_URL
+        # Local file path
         image_url = f"/uploads/foods/{food.image}"
     return {
         "id": food.id,
@@ -1022,12 +1023,21 @@ def internal_error(e):
 
 
 # ============================================
-# BOOTSTRAP
+# BOOTSTRAP - Tự động tạo database khi app start
 # ============================================
-if __name__ == "__main__":
+def init_db():
+    """Khởi tạo database tables (chạy khi app start, kể cả trên Render)"""
     with app.app_context():
-        db.create_all()
+        try:
+            db.create_all()
+            print("[DB] Database tables đã được khởi tạo")
+        except Exception as e:
+            print(f"[DB] Lỗi khởi tạo database: {e}")
 
+# Gọi init_db() khi module được import (chạy trên cả local và Render)
+init_db()
+
+if __name__ == "__main__":
     print("=" * 60)
     print(" MTP Food Backend Server (SQL + Auth + AI)")
     print("=" * 60)
